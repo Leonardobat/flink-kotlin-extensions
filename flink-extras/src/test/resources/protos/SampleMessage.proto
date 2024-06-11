@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package io.github.leonardobat.samples;
+option java_package = "io.github.leonardobat.samples";
+option java_multiple_files = true;
+
+message SampleInputMessage {
+    int64 id = 1;
+    string value = 2;
+    optional string comment = 3;
+}
+
+message SampleOutputMessage {
+    int64 timestamp = 1;
+    int64 id = 2;
+    string value = 3;
+    optional string comment = 4;
+}
