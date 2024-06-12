@@ -4,8 +4,7 @@ plugins {
 
 }
 
-group = "io.github.leonardobat"
-version = "0.1-SNAPSHOT"
+description = "A collection of helper functions for Apache Flink® streaming API in Kotlin projects."
 
 repositories {
     mavenCentral()

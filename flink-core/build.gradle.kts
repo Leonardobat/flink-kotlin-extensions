@@ -4,6 +4,8 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
 }
 
+description = "A collection of helper functions to enhance the usability of Apache Flink® Core API for Kotlin projects."
+
 repositories {
     mavenCentral()
 }

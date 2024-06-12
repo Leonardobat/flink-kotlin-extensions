@@ -1,5 +1,4 @@
 import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.remove
 
 plugins {
     java
@@ -7,8 +6,7 @@ plugins {
     id("com.google.protobuf") version "0.9.4"
 }
 
-group = "io.github.leonardobat"
-version = "0.1-SNAPSHOT"
+description = "Additional utilities for common third-party-components like Google's Protobuf and Apache Kafka®"
 
 repositories {
     mavenCentral()
@@ -51,11 +49,7 @@ protobuf {
     }
     generateProtoTasks {
         all().forEach {
-            it.builtins.remove("java")
             it.builtins {
-                id("java") {
-                    option("lite")
-                }
                 id("kotlin") {
                 }
             }
