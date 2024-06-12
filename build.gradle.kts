@@ -5,6 +5,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     id("com.palantir.git-version") version "3.1.0"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "io.github.leonardobat"
@@ -30,7 +31,9 @@ repositories {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
+    apply(plugin = "signing")
     apply(plugin = "com.palantir.git-version")
+    apply(plugin = "org.jetbrains.dokka")
 
     project.version = gitVersion()
 
@@ -43,6 +46,26 @@ subprojects {
         useJUnitPlatform()
     }
 
+    java {
+        withSourcesJar()
+    }
+
+    val dokkaJavadocJar = tasks.register<Jar>("dokkaJavadocJar") {
+        dependsOn(tasks.named("dokkaJavadoc"))
+        from(tasks.dokkaJavadoc.flatMap { it.outputDirectory })
+        archiveClassifier.set("javadoc")
+    }
+
+    val dokkaHtmlJar = tasks.register<Jar>("dokkaHtmlJar") {
+        dependsOn(tasks.dokkaHtml)
+        from(tasks.dokkaHtml.flatMap { it.outputDirectory })
+        archiveClassifier.set("html-docs")
+    }
+
+    tasks.withType<GenerateModuleMetadata>().configureEach {
+        dependsOn(dokkaJavadocJar, dokkaHtmlJar)
+    }
+
     publishing {
         publications {
             create<MavenPublication>("mavenJava") {
@@ -51,6 +74,9 @@ subprojects {
                 groupId = project.group.toString()
                 artifactId = project.name
                 version = project.version.toString()
+
+                artifact(dokkaJavadocJar)
+                artifact(dokkaHtmlJar)
 
                 pom {
                     name.set("$groupId:$artifactId")
@@ -80,6 +106,12 @@ subprojects {
                 }
             }
         }
+        // TODO: Add Sonatype publishing when Maven Central Publish API support is available for Gradle
+    }
+
+    signing {
+        useGpgCmd()
+        sign(publishing.publications["mavenJava"])
     }
 }
 
