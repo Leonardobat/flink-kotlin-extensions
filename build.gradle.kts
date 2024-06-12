@@ -1,5 +1,6 @@
 plugins {
     java
+    signing
     `maven-publish`
     kotlin("jvm") version "1.9.23"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
@@ -31,7 +32,6 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "com.palantir.git-version")
 
-    val gitVersion: groovy.lang.Closure<String> by extra
     project.version = gitVersion()
 
     dependencies {
