@@ -8,10 +8,6 @@ plugins {
     id("org.jetbrains.dokka") version "1.9.20"
 }
 
-group = "io.github.leonardobat"
-val gitVersion: groovy.lang.Closure<String> by extra
-version = gitVersion()
-
 val flinkVersion = "1.18.1"
 
 ext {
@@ -28,14 +24,18 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    apply(plugin = "com.palantir.git-version")
+    group = "io.github.leonardobat.flink-kotlin-extensions"
+    val gitVersion: groovy.lang.Closure<String> by extra
+    version = gitVersion()
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
     apply(plugin = "signing")
-    apply(plugin = "com.palantir.git-version")
     apply(plugin = "org.jetbrains.dokka")
-
-    project.version = gitVersion()
 
     dependencies {
         testImplementation(kotlin("test"))
