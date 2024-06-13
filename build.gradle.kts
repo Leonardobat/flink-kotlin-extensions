@@ -66,52 +66,54 @@ subprojects {
         dependsOn(dokkaJavadocJar, dokkaHtmlJar)
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
+    afterEvaluate {
+        publishing {
+            publications {
+                create<MavenPublication>("mavenJava") {
+                    from(components["java"])
 
-                groupId = project.group.toString()
-                artifactId = project.name
-                version = project.version.toString()
+                    groupId = project.group.toString()
+                    artifactId = project.name
+                    version = project.version.toString()
 
-                artifact(dokkaJavadocJar)
-                artifact(dokkaHtmlJar)
+                    artifact(dokkaJavadocJar)
+                    artifact(dokkaHtmlJar)
 
-                pom {
-                    name.set("$groupId:$artifactId")
-                    description.set(project.description)
-                    url.set("https://github.com/Leonardobat/flink-kotlin-extensions")
-
-                    licenses {
-                        license {
-                            name.set("The Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id.set("leonardobat")
-                            name.set("Leonardo Batista")
-                            email.set("leonardobazeta@gmail.com")
-                        }
-                    }
-
-                    scm {
-                        connection.set("scm:git:git://github.com/Leonardobat/flink-kotlin-extensions.git")
-                        developerConnection.set("scm:git:ssh://git@github.com:Leonardobat/flink-kotlin-extensions.git")
+                    pom {
+                        name.set("$groupId:$artifactId")
+                        description.set(project.description)
                         url.set("https://github.com/Leonardobat/flink-kotlin-extensions")
+
+                        licenses {
+                            license {
+                                name.set("The Apache License, Version 2.0")
+                                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id.set("leonardobat")
+                                name.set("Leonardo Batista")
+                                email.set("leonardobazeta@gmail.com")
+                            }
+                        }
+
+                        scm {
+                            connection.set("scm:git:git://github.com/Leonardobat/flink-kotlin-extensions.git")
+                            developerConnection.set("scm:git:ssh://git@github.com:Leonardobat/flink-kotlin-extensions.git")
+                            url.set("https://github.com/Leonardobat/flink-kotlin-extensions")
+                        }
                     }
                 }
             }
+            // TODO: Add Sonatype publishing when Maven Central Publish API support is available for Gradle
         }
-        // TODO: Add Sonatype publishing when Maven Central Publish API support is available for Gradle
-    }
 
-    signing {
-        useGpgCmd()
-        sign(publishing.publications["mavenJava"])
+        signing {
+            useGpgCmd()
+            sign(publishing.publications["mavenJava"])
+        }
     }
 }
 
