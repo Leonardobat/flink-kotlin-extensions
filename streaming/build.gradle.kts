@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     api("org.apache.flink:flink-streaming-java:${rootProject.ext["flinkVersion"]}")
-    implementation(project(":flink-core"))
+    implementation(project(":core"))
 
     testImplementation("org.apache.flink:flink-test-utils:${rootProject.ext["flinkVersion"]}") {
         exclude("org.junit.vintage", "junit-vintage-engine")

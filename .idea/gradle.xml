@@ -9,9 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/flink-core" />
-            <option value="$PROJECT_DIR$/flink-extras" />
-            <option value="$PROJECT_DIR$/flink-streaming" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/extras" />
+            <option value="$PROJECT_DIR$/streaming" />
           </set>
         </option>
       </GradleProjectSettings>
